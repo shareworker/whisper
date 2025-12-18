@@ -19,9 +19,13 @@ A powerful web-based tool for generating subtitles from videos. It combines Open
 - **Live Preview**: Built-in video player with real-time subtitle preview and styling.
 - **Format Support**: Export to standard SRT and VTT formats.
 
+### Supported Platforms
+- **Windows** (x64)
+- **Linux** (x64, tested on Ubuntu 20.04+)
+
 ### Prerequisites
 - Python 3.8+
-- [FFmpeg](https://ffmpeg.org/download.html) (Must be added to system PATH)
+- [FFmpeg](https://ffmpeg.org/download.html) (Must be in system PATH)
 - DeepSeek API Key
 
 ### Installation
@@ -32,7 +36,24 @@ A powerful web-based tool for generating subtitles from videos. It combines Open
    cd whisper-subtitle-generator
    ```
 
-2. Install Python dependencies:
+2. Install system dependencies:
+
+   **Windows:**
+   - Download FFmpeg from https://ffmpeg.org/download.html and add to PATH
+   - yt-dlp is installed via pip (step 3)
+
+   **Linux (Ubuntu/Debian):**
+   ```bash
+   sudo apt update
+   sudo apt install ffmpeg
+   ```
+
+   **Linux (Fedora/RHEL):**
+   ```bash
+   sudo dnf install ffmpeg
+   ```
+
+3. Install Python dependencies:
    ```bash
    pip install -r requirements.txt
    ```
@@ -58,6 +79,23 @@ A powerful web-based tool for generating subtitles from videos. It combines Open
 - `DEEPSEEK_BASE_URL`: Base URL for DeepSeek API (default: `https://api.deepseek.com`).
 - `HTTP_PROXY` / `HTTPS_PROXY`: Proxy settings if needed.
 
+### GPU Acceleration (Optional)
+GPU acceleration significantly speeds up transcription. The application defaults to CUDA but falls back to CPU if unavailable.
+
+**Windows:**
+- Install NVIDIA drivers from https://www.nvidia.com/drivers
+- CUDA toolkit is bundled with `faster-whisper` via CTranslate2
+
+**Linux:**
+```bash
+# Install NVIDIA drivers (Ubuntu example)
+sudo apt install nvidia-driver-535
+# Verify installation
+nvidia-smi
+```
+
+To use CPU instead, select "cpu" in the Device dropdown in the Advanced settings.
+
 ---
 
 <a name="chinese"></a>
@@ -75,9 +113,13 @@ A powerful web-based tool for generating subtitles from videos. It combines Open
 - **实时预览**：内置视频播放器，支持实时字幕预览和样式调整。
 - **格式支持**：导出标准的 SRT 和 VTT 字幕格式。
 
+### 支持平台
+- **Windows** (x64)
+- **Linux** (x64，已在 Ubuntu 20.04+ 测试)
+
 ### 前置要求
 - Python 3.8+
-- [FFmpeg](https://ffmpeg.org/download.html) (必须添加到系统 PATH 环境变量中)
+- [FFmpeg](https://ffmpeg.org/download.html) (必须在系统 PATH 中)
 - DeepSeek API Key
 
 ### 安装步骤
@@ -88,7 +130,24 @@ A powerful web-based tool for generating subtitles from videos. It combines Open
    cd whisper-subtitle-generator
    ```
 
-2. 安装 Python 依赖：
+2. 安装系统依赖：
+
+   **Windows:**
+   - 从 https://ffmpeg.org/download.html 下载 FFmpeg 并添加到 PATH
+   - yt-dlp 通过 pip 安装（步骤 3）
+
+   **Linux (Ubuntu/Debian):**
+   ```bash
+   sudo apt update
+   sudo apt install ffmpeg
+   ```
+
+   **Linux (Fedora/RHEL):**
+   ```bash
+   sudo dnf install ffmpeg
+   ```
+
+3. 安装 Python 依赖：
    ```bash
    pip install -r requirements.txt
    ```
@@ -113,3 +172,20 @@ A powerful web-based tool for generating subtitles from videos. It combines Open
 - `DEEPSEEK_API_KEY`: 你的 DeepSeek API 密钥。
 - `DEEPSEEK_BASE_URL`: DeepSeek API 的基础 URL（默认：`https://api.deepseek.com`）。
 - `HTTP_PROXY` / `HTTPS_PROXY`: 如有需要，可设置代理。
+
+### GPU 加速（可选）
+GPU 加速可显著提升转写速度。应用默认使用 CUDA，如不可用则自动回退到 CPU。
+
+**Windows:**
+- 从 https://www.nvidia.com/drivers 安装 NVIDIA 驱动
+- CUDA 工具包已通过 CTranslate2 随 `faster-whisper` 捆绑
+
+**Linux:**
+```bash
+# 安装 NVIDIA 驱动（Ubuntu 示例）
+sudo apt install nvidia-driver-535
+# 验证安装
+nvidia-smi
+```
+
+如需使用 CPU，请在高级设置的 Device 下拉菜单中选择 "cpu"。
