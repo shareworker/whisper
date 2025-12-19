@@ -109,7 +109,6 @@ def build_demo() -> gr.Blocks:
                 value="medium",
             )
             device = gr.Dropdown(label="Device", choices=["cuda", "cpu"], value="cuda")
-            compute_type = gr.Dropdown(label="Compute Type", choices=["float16", "int8", "int8_float16"], value="float16")
 
             deepseek_base_url = gr.Textbox(
                 label="DEEPSEEK_BASE_URL (optional override)",
@@ -171,13 +170,13 @@ def build_demo() -> gr.Blocks:
             track_value: str, # Current subtitle track selection
             model_size_value: str,
             device_value: str,
-            compute_type_value: str,
             deepseek_base_url_value: str,
             proxy_value: str,
             deepseek_api_key_value: str,
             deepseek_model_value: str,
             translation_target_value: str,
         ) -> Generator[Tuple[str, Any, Optional[str], Optional[str], str, Dict[str, Optional[str]]], None, None]:
+            compute_type_value = "int8" if device_value == "cpu" else "float16"
             cfg = PipelineConfig(
                 url=(url_value or None),
                 local_video_path=local_video_value,
@@ -235,7 +234,6 @@ def build_demo() -> gr.Blocks:
                 subtitle_track,
                 model_size,
                 device,
-                compute_type,
                 deepseek_base_url,
                 proxy,
                 deepseek_api_key,
