@@ -15,6 +15,23 @@ class DeepSeekClient:
     proxy: str = ""
 
     def translate_batch(self, texts: List[str], target_language: str) -> List[str]:
+        if not texts:
+            return []
+
+        try:
+            return self._translate_chunk_with_retries(texts, target_language)
+        except ValueError as e:
+            if len(texts) > 1:
+                mid = len(texts) // 2
+                left = texts[:mid]
+                right = texts[mid:]
+                print(f"[DeepSeekClient] Batch failed: {e}. Splitting {len(texts)} -> {len(left)} + {len(right)}...")
+                return self.translate_batch(left, target_language) + self.translate_batch(right, target_language)
+            else:
+                print(f"[DeepSeekClient] Single item failed: {e}. Returning original.")
+                return texts
+
+    def _translate_chunk_with_retries(self, texts: List[str], target_language: str) -> List[str]:
         if not self.base_url:
             raise ValueError("DEEPSEEK_BASE_URL is required")
         if not self.api_key:
